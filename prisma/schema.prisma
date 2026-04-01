@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum Role {
+  VIEWER
+  ANALYST
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum RecordStatus {
+  ACTIVE
+  DELETED
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  password     String
+  firstName    String
+  lastName     String
+  role         Role       @default(VIEWER)
+  status       UserStatus @default(ACTIVE)
+  refreshToken String?
+
+  financialRecords FinancialRecord[]
+  auditLogs        AuditLog[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  type        String  // "INCOME" | "EXPENSE" | "BOTH"
+  color       String?
+  description String?
+
+  financialRecords FinancialRecord[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type])
+  @@map("categories")
+}
+
+model FinancialRecord {
+  id          String          @id @default(uuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id])
+  amount      Decimal         @db.Decimal(15, 2)
+  type        TransactionType
+  categoryId  String?
+  category    Category?       @relation(fields: [categoryId], references: [id])
+  date        DateTime
+  description String?
+  tags        Json            @default("[]")
+  status      RecordStatus    @default(ACTIVE)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([userId])
+  @@index([type])
+  @@index([categoryId])
+  @@index([date])
+  @@index([status])
+  @@index([userId, date])
+  @@index([userId, type])
+  @@index([userId, status])
+  @@map("financial_records")
+}
+
+model AuditLog {
+  id         String  @id @default(uuid())
+  userId     String
+  user       User    @relation(fields: [userId], references: [id])
+  action     String
+  resource   String
+  resourceId String?
+  details    Json?
+  ipAddress  String?
+  userAgent  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([resource])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
