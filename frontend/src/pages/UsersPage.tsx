@@ -165,7 +165,23 @@ export default function UsersPage() {
                       )}
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className={getStatusBadgeClass(u.status)}>{u.status}</span>
+                      {canUpdateStatus && u.id !== me?.id ? (
+                        <select
+                          value={u.status}
+                          onChange={(e) => handleStatusChange(u.id, e.target.value as UserStatus)}
+                          className={`select-field w-auto text-xs py-1 px-2 ${
+                            u.status === 'ACTIVE' ? 'text-green-400 border-green-500/30 bg-green-500/10' :
+                            u.status === 'SUSPENDED' ? 'text-red-400 border-red-500/30 bg-red-500/10' :
+                            'text-gray-400 border-gray-500/30 bg-gray-500/10'
+                          }`}
+                        >
+                          {Object.values(UserStatus).map((s) => (
+                            <option key={s} value={s}>{s.charAt(0) + s.slice(1).toLowerCase()}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <span className={getStatusBadgeClass(u.status)}>{u.status}</span>
+                      )}
                     </td>
                     <td className="px-5 py-3.5 text-sm text-surface-400">{formatDate(u.createdAt)}</td>
                     <td className="px-5 py-3.5 text-right">
@@ -173,19 +189,6 @@ export default function UsersPage() {
                         <button onClick={() => setEditingUser({ ...u })} className="p-1.5 rounded-lg text-surface-400 hover:text-primary-400 hover:bg-surface-700 transition-colors">
                           <Edit3 className="w-4 h-4" />
                         </button>
-                        {canUpdateStatus && u.id !== me?.id && (
-                          <>
-                            {u.status === UserStatus.ACTIVE ? (
-                              <button onClick={() => handleStatusChange(u.id, UserStatus.SUSPENDED)} className="p-1.5 rounded-lg text-surface-400 hover:text-warning-400 hover:bg-surface-700 transition-colors" title="Suspend">
-                                <UserX className="w-4 h-4" />
-                              </button>
-                            ) : (
-                              <button onClick={() => handleStatusChange(u.id, UserStatus.ACTIVE)} className="p-1.5 rounded-lg text-surface-400 hover:text-success-400 hover:bg-surface-700 transition-colors" title="Activate">
-                                <UserCheck className="w-4 h-4" />
-                              </button>
-                            )}
-                          </>
-                        )}
                         {canDeleteUser && u.id !== me?.id && (
                           <button onClick={() => setDeletingId(u.id)} className="p-1.5 rounded-lg text-surface-400 hover:text-danger-400 hover:bg-surface-700 transition-colors">
                             <Trash2 className="w-4 h-4" />
