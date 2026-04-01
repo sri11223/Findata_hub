@@ -422,6 +422,45 @@ All environment variables are validated at startup using Zod. Missing or malform
 
 ---
 
+## Frontend (React Dashboard)
+
+A production-quality **React + TypeScript + Tailwind CSS** dashboard that consumes all backend API endpoints with full RBAC integration.
+
+### Frontend Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | React 18 + Vite 5 |
+| Language | TypeScript |
+| Styling | Tailwind CSS 3 |
+| Routing | React Router 6 |
+| HTTP Client | Axios (with JWT interceptors) |
+| Charts | Recharts (Area, Bar, Pie, Line, Radial) |
+| Icons | Lucide React |
+| Notifications | React Hot Toast |
+
+### Frontend Features
+
+- **Authentication** — Login/Register pages with JWT token management and auto-refresh
+- **RBAC-aware UI** — Sidebar navigation, page access, and action buttons conditionally rendered based on user permissions
+- **Dashboard** — Summary cards (income, expenses, net balance, record count), monthly trends area chart, expense pie chart, income vs expense bar chart, recent activity feed
+- **Analytics** — Dedicated page (Analyst+) with net balance line chart, income/expense category pie charts, top expense bar chart, period selector
+- **Records** — Search, type/category/sort filters, paginated table, create/edit/delete with modals, RBAC-gated actions
+- **Categories** — Grid card layout with color swatches, CRUD modals (Admin+)
+- **User Management** — User table (Admin+) with inline role changer, status toggles (activate/suspend), create/edit/delete
+
+### Running the Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend runs at **http://localhost:5173** and proxies API requests to the backend at `http://localhost:3000`.
+
+---
+
 ## Assumptions Made
 
 1. A user registers with the `VIEWER` role by default. Admins can create users with a specified role via `POST /users`.
