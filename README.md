@@ -29,16 +29,17 @@ A production-grade REST API backend for a finance dashboard system, built with *
 
 ## Table of Contents
 
-1. [Architecture Overview](#architecture-overview)
+1. [Architecture Overview](#architecture-overview)  |  [Full Architecture Deep-Dive](./ARCHITECTURE.md)
 2. [Tech Stack](#tech-stack)
 3. [Project Structure](#project-structure)
 4. [Access Control Model](#access-control-model)
 5. [API Endpoints](#api-endpoints)
 6. [Setup & Running](#setup--running)
-7. [Testing](#testing)
+7. [Testing](#testing)  |  [CI/CD](./.github/workflows/ci.yml)
 8. [API Documentation (Swagger)](#api-documentation-swagger)
 9. [Design Decisions & Assumptions](#design-decisions--assumptions)
 10. [Security Considerations](#security-considerations)
+11. [Frontend (React Dashboard)](#frontend-react-dashboard)
 
 ---
 
