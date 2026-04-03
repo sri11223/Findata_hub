@@ -1,5 +1,28 @@
 # FinData Hub — Finance Data Processing & Access Control Backend
 
+---
+
+## 🚀 Live Demo
+
+| Service | Link |
+|---|---|
+| **Frontend (React)** | [https://findata-hub.vercel.app/](https://findata-hub.vercel.app/) |
+| **Backend API** | [https://findata-hub.onrender.com](https://findata-hub.onrender.com) |
+| **API Documentation** | [https://findata-hub.onrender.com/api/docs/](https://findata-hub.onrender.com/api/docs/) |
+
+### Demo Credentials
+
+| Role | Email | Password |
+|---|---|---|
+| **Super Admin** | `superadmin@findata.com` | `SuperAdmin@123` |
+| **Admin** | `admin@findata.com` | `Admin@123456` |
+| **Analyst** | `analyst@findata.com` | `Analyst@123` |
+| **Viewer** | `viewer@findata.com` | `Viewer@1234` |
+
+---
+
+
+
 A production-grade REST API backend for a finance dashboard system, built with **Node.js + TypeScript + Express + PostgreSQL (Prisma ORM)**.
 
 ---
