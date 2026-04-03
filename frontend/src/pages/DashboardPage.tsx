@@ -183,7 +183,7 @@ export default function DashboardPage() {
                   </Pie>
                   <Tooltip
                     contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '12px', color: '#e2e8f0' }}
-                    formatter={(value: number) => formatCurrency(value)}
+                    formatter={(value: any) => formatCurrency(value)}
                   />
                 </PieChart>
               </ResponsiveContainer>
